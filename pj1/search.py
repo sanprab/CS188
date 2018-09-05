@@ -72,6 +72,9 @@ def tinyMazeSearch(problem):
     w = Directions.WEST
     return  [s, s, w, s, w, w, s, w]
 
+
+
+
 def depthFirstSearch(problem):
     """
     Search the deepest nodes in the search tree first.
@@ -86,16 +89,79 @@ def depthFirstSearch(problem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
-    "*** YOUR CODE HERE ***"
+
+    result = []
+    visited = []
+
+    stack = util.Stack()
+    start = (problem.getStartState(), [])
+    stack.push(start)
+
+    while not stack.isEmpty():
+        (node, path) = stack.pop()
+        if problem.isGoalState(node):
+            result = path
+            break
+
+        if node not in visited:
+            visited.append(node)
+            for w in problem.getSuccessors(node):
+                newPath = path + [w[1]]
+                newNode = (w[0], newPath)
+                stack.push(newNode)
+
+    return result
     util.raiseNotDefined()
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
+    result = []
+    visited = []
+
+    queue = util.Queue()
+    start = (problem.getStartState(), [])
+    queue.push(start)
+
+    while not queue.isEmpty():
+        (node, path) = queue.pop()
+        if problem.isGoalState(node):
+            result = path
+            break
+
+        if node not in visited:
+            visited.append(node)
+            for w in problem.getSuccessors(node):
+                newPath = path + [w[1]]
+                newNode = (w[0], newPath)
+                queue.push(newNode)
+
+    return result
     util.raiseNotDefined()
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
+    result = []
+    visited = []
+
+    p_queue = util.PriorityQueue()
+    start = (problem.getStartState(), [], 0)
+    p_queue.update(start,0)
+
+    while not p_queue.isEmpty():
+        (node, path, cost) = p_queue.pop()
+        if problem.isGoalState(node):
+            result = path
+            break
+
+        if node not in visited:
+            visited.append(node)
+            for w in problem.getSuccessors(node):
+                newPath = path + [w[1]]
+                newCost = cost + w[2]
+                newNode = (w[0], newPath, newCost)
+                p_queue.update(newNode, newCost)
+
+    return result
     "*** YOUR CODE HERE ***"
     util.raiseNotDefined()
 
