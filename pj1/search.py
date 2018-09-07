@@ -98,23 +98,24 @@ def depthFirstSearch(problem):
     stack.push(start)
 
     while not stack.isEmpty():
-        (node, path) = stack.pop()
-        if problem.isGoalState(node):
+        (state, path) = stack.pop()
+        if problem.isGoalState(state):
             result = path
             break
 
-        if node not in visited:
-            visited.append(node)
-            for w in problem.getSuccessors(node):
+        if state not in visited:
+            visited.append(state)
+            for w in problem.getSuccessors(state):
                 newPath = path + [w[1]]
-                newNode = (w[0], newPath)
-                stack.push(newNode)
+                newState = (w[0], newPath)
+                stack.push(newState)
 
     return result
     util.raiseNotDefined()
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
+
     result = []
     visited = []
 
@@ -138,6 +139,7 @@ def breadthFirstSearch(problem):
     return result
     util.raiseNotDefined()
 
+
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     result = []
@@ -160,6 +162,8 @@ def uniformCostSearch(problem):
                 newCost = cost + w[2]
                 newNode = (w[0], newPath, newCost)
                 p_queue.update(newNode, newCost)
+
+
 
     return result
     "*** YOUR CODE HERE ***"
@@ -198,8 +202,6 @@ def aStarSearch(problem, heuristic=nullHeuristic):
 
     return result
 
-
-    "*** YOUR CODE HERE ***"
     util.raiseNotDefined()
 
 # Abbreviations
